@@ -1,0 +1,25 @@
+#id-row {
+    align-items: center;
+}
+
+#datatable-produk_filter {
+    justify-content: start;
+}
+.dt-buttons {
+    margin: 10px;
+}
+
+.dt-buttons :hover {
+    color: #ce7e00;
+}
+
+#btn-report div button{
+    background-color: transparent;
+    border: transparent;
+}
+
+@media only screen and (max-width: 576px) {
+    #datatable-produk_length {
+      display: none;
+    }
+  }
