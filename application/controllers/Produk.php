@@ -184,49 +184,44 @@ class Produk extends CI_Controller
             "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css",
             "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
         ];
-        $this->form_validation->set_rules('qr', 'Qr', 'required|trim');
         $this->form_validation->set_rules('kode_barang', 'Kode Barang', 'required|trim');
         $this->form_validation->set_rules('nama_barang', 'Nama Barang', 'required|trim');
         $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required|trim');
-        $this->form_validation->set_rules('stok', 'Stok', 'required|trim');
+        $this->form_validation->set_rules('stok_awal', 'Stok', 'required|trim');
         $this->form_validation->set_rules('satuan', 'Satuan', 'required|trim');
         $this->form_validation->set_rules('harga_beli', 'Harga Beli', 'required|trim');
         $this->form_validation->set_rules('harga_jual', 'Harga Jual', 'required|trim');
-        $this->form_validation->set_rules('kategori_id', 'Kategori Id', 'required|trim');
-        $this->form_validation->set_rules('supplier_id', 'Supplier Id', 'required|trim');
-        $this->form_validation->set_rules('img', 'Image', 'required|trim');
+        $this->form_validation->set_rules('kategori', 'Kategori Id', 'required|trim');
         if ($this->form_validation->run() == TRUE) {
             /**
              * Condition is true, edit data
              */
-            $qr          = $this->post->input('qr');
-            $kode_barang = $this->post->input('kode_barang');
-            $nama_barang = $this->post->input('nama_barang');
-            $deskripsi   = $this->post->input('deskripsi');
-            $stok        = $this->post->input('stok');
-            $satuan      = $this->post->input('satuan');
-            $harga_beli  = $this->post->input('harga_beli');
-            $harga_jual  = $this->post->input('harga_jual');
-            $kategori_id = $this->post->input('kategori_id');
-            $supplier_id = $this->post->input('supplier_id');
-            $img         = $this->post->input('img');
+            $kode_barang = $this->input->post('kode_barang');
+            $nama_barang = $this->input->post('nama_barang');
+            $deskripsi   = $this->input->post('deskripsi');
+            $stok        = $this->input->post('stok_awal');
+            $satuan      = $this->input->post('satuan');
+            $harga_beli  = $this->input->post('harga_beli');
+            $harga_jual  = $this->input->post('harga_jual');
+            $kategori_id = $this->input->post('kategori');
 
             $table = 'barang';
             $table_data = [
-                'qr'          => $qr,
                 'kode_barang' => $kode_barang,
                 'nama_barang' => $nama_barang,
                 'deskripsi'   => $deskripsi,
-                'stok'        => $stok,
+                'stok_awal'   => $stok,
+                'sisa_stok'   => $stok,
                 'satuan'      => $satuan,
                 'harga_beli'  => $harga_beli,
                 'harga_jual'  => $harga_jual,
-                'kategori_id' => $kategori_id,
-                'supplier_id' => $supplier_id,
-                'img'         => $img
+                'kategori'    => $kategori_id,
+                'status'      => 1,
+                'img'         => 'default.jpg'
             ];
 
             $this->model->create($table, $table_data);
+            redirect(site_url('produk'));
         } else {
             /**
              * Condition is false, edit data
@@ -271,7 +266,10 @@ class Produk extends CI_Controller
     public function get_all(String $table = "barang", array $order_by = ['barang.id', 'ASC'])
     {
 
-        $this->db->select('*')->from($table)->join('kategori', 'barang.kategori = kategori.id')->limit(10, $_POST['start']);
+        $this->db
+        ->select('barang.id, barang.kode_barang, barang.nama_barang, barang.stok_awal, barang.sisa_stok, barang.created_date, barang.satuan, barang.harga_beli, barang.harga_jual, barang.status, barang.img')
+        ->select('kategori.kategori')
+        ->from($table)->join('kategori', 'barang.kategori = kategori.id')->limit(10, $_POST['start']);
         $this->db->limit($_POST['length'], $_POST['start']);
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -293,7 +291,10 @@ class Produk extends CI_Controller
         }
         $list = $this->db->get()->result();
 
-        $list2 = $this->db->select('*')->from($table)->join('kategori', 'barang.kategori = kategori.id')->get()->result();
+        $list2 = $this->db
+        ->select('barang.id, barang.kode_barang, barang.nama_barang, barang.stok_awal, barang.sisa_stok, barang.created_date, barang.satuan, barang.harga_beli, barang.harga_jual, barang.status, barang.img')
+        ->select('kategori.kategori')
+        ->from($table)->join('kategori', 'barang.kategori = kategori.id')->get()->result();
 
         $recordsFiltered = count($list);
         $recordsTotal = count($list2);

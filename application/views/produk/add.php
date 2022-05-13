@@ -31,7 +31,7 @@
                             </div>
                         <?php } ?>
                         <div class="card-body">
-                            <form method="post" action="<?= site_url('transaksi/add') ?>">
+                            <form method="post" action="<?= site_url('produk/add') ?>">
                                 <!-- Input groups with icon -->
                                 <div class="row">
                                     <div class="col-md-4">
@@ -50,7 +50,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                                 </div>
-                                                <input class="form-control" placeholder="Nama Barang" type="text" id="total-barang" name="total-barang">
+                                                <input class="form-control" placeholder="Nama Barang" type="text" id="nama_barang" name="nama_barang">
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                                 </div>
-                                                <input class="form-control" placeholder="Stok" type="number" id="harga_beli" name="harga_beli">
+                                                <input class="form-control" placeholder="Harga Beli" type="number" id="harga_beli" name="harga_beli">
                                             </div>
                                         </div>
                                     </div>
@@ -120,32 +120,6 @@
                                                         <option value="<?= $kategori->id ?>"><?= $kategori->kategori ?></option>
                                                     <?php } ?>
                                                 </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 m-auto">
-                                        <div class="form-group">
-                                            <label class="custom-toggle" style="width: 80px;">
-                                                <input type="checkbox" checked name="status" id="status">
-                                                <span class="custom-toggle-slider rounded-circle" data-label-off="Non Aktif" data-label-on="Aktif"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 m-auto">
-                                        <div class="form-group">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="customFileLang" lang="en">
-                                                <label class="custom-file-label" for="customFileLang">Select file</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <div class="input-group input-group-merge">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                                </div>
-                                                <input class="form-control" placeholder="Jumlah Beli" type="number" id="total-barang" name="total-barang" value="1" min="1">
                                             </div>
                                         </div>
                                     </div>
